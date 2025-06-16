@@ -35,18 +35,31 @@ A complete registration system for college fests or events with:
 ## 📁 Folder Structure
 
 sabrang-backend/
+
 ├── public/
+
 │ ├── index.html
+
 │ ├── success.html
+
 │ └── style.css
+
 │
+
 ├── utils/
+
 │ └── generateQR.js
+
 │
+
 ├── .env.example # Sample env file (DO NOT commit real .env)
+
 ├── .gitignore
+
 ├── server.js
+
 ├── package.json
+
 
 ---
 
