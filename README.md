@@ -67,14 +67,6 @@ sabrang-backend/
 
 Create a `.env` file in the root (not shared on GitHub):
 
-EMAIL_USER=your_email@gmail.com
-
-EMAIL_PASS=your_email_app_password
-
-RAZORPAY_KEY_ID=your_razorpay_key_id
-
-RAZORPAY_KEY_SECRET=your_razorpay_secret
-
 ➡️ Check `.env.example` for the format.
 
 ---
