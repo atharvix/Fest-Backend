@@ -73,7 +73,7 @@ Create a `.env` file in the root (not shared on GitHub):
 
 ## 💻 How to Run Locally
 
-1. Clone the repo: git clone https://github.com/your-username/sabrang-backend.git
+1. Clone the repo: git clone https://github.com/your-username/Fest-Backend.git
 
 2. Navigate to folder: cd sabrang-backend
 
