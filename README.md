@@ -52,7 +52,7 @@ sabrang-backend/
 
 │
 
-├── .env.example # Sample env file (DO NOT commit real .env)
+├── .env.example # Sample env file
 
 ├── .gitignore
 
