@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Fest Registration</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+</head>
+<body>
+  <div class="container">
+    <h1>Fest Registration Form</h1>
+    <form id="registrationForm">
+      <input type="text" name="name" placeholder="Full Name" required />
+      <input type="email" name="email" placeholder="Email" required />
+      <input type="tel" name="phone" placeholder="Phone Number" required />
+      <input type="text" name="event" placeholder="Event Name" required />
+      <button type="submit">Register & Pay ₹1</button>
+    </form>
+  </div>
+
+  <script>
+    document.getElementById("registrationForm").addEventListener("submit", async function (e) {
+      e.preventDefault();
+
+      // Get form data
+      const form = e.target;
+      const formData = new FormData(form);
+      const user = Object.fromEntries(formData.entries());
+
+      try {
+        // Step 1: Create Razorpay Order
+        const orderRes = await fetch("/create-order", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ amount: 1 }), // ₹1
+        });
+        const order = await orderRes.json();
+
+        // Step 2: Open Razorpay checkout
+        const options = {
+          key: "rzp_test_JZxqdQS1mmA4df", 
+          amount: order.amount,
+          currency: order.currency,
+          name: "Fest Registration",
+          description: "Payment for Event",
+          order_id: order.id,
+          handler: async function (response) {
+            // Step 3: On successful payment, send user data to server
+            const success = await fetch("/success", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(user),
+            });
+
+            if (success.redirected) {
+              window.location.href = success.url;
+            } else {
+              alert("Error sending data.");
+            }
+          },
+          prefill: {
+            name: user.name,
+            email: user.email,
+            contact: user.phone,
+          },
+          theme: { color: "#3399cc" },
+        };
+
+        const rzp = new Razorpay(options);
+        rzp.open();
+      } catch (error) {
+        console.error("Error during payment:", error);
+        alert("Something went wrong. Try again.");
+      }
+    });
+  </script>
+</body>
+</html>
